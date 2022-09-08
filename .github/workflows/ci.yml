@@ -10,7 +10,7 @@ jobs:
        
 
       - name: cahce dependencies
-        uses: actions/caches@v1
+        uses: actions/caches@v2
         with: 
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json')}}
