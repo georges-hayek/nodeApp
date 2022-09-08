@@ -13,8 +13,5 @@ jobs:
           node-version: "12.x"
       - run: npm i --save node-pre-gyp    
       - run: npm ci 
-      - run: npm test -- --coverage
-        env:
-           CI: true
-
+      
    
