@@ -14,5 +14,7 @@ jobs:
       - run: npm i --save node-pre-gyp    
       - run: npm ci 
       - run: npm install
-      
+      - name: Build Project
+        if: github.event_name == 'push'
+        run: npm run build
    
