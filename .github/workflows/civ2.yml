@@ -19,12 +19,10 @@ jobs:
             ${{ runner.os }}-build-${{env.cache-name}}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
-      - uses: actions/setup-node@v1
       - name: Install Dependencies
         if: steps.storeCaches.outputs.cache-hit != 'true'
-        run: npm install node-pre-gyp
- 
+      - uses: actions/setup-node@v1
+      - run: npm install node-pre-gyp
+      - run: npm ci
    
-      
-    
 
