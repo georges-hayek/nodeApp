@@ -1,6 +1,6 @@
 name: Connect through SSH
 
-on: push
+on: issues
 
 jobs:
   pinger_job:
