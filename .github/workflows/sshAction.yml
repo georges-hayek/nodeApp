@@ -5,16 +5,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: ssh pipelines
-        uses: cross-the-world/ssh-pipeline@master
-        env:
-          WELCOME: "ssh pipeline"
+        uses: appleby/ssh-action@master
         with:
-          host: ${{ secrets.HOST }}
-          user: ${{ secrets.USER }}
-          pass: ${{ secrets.KEY }}
-          port: ${{ secrets.PORT }}
+          host: http://139.177.197.133
+          user: root
+          key: ${{ secrets.SSH_SECRET }}
+          port: 22
           connect_timeout: 10s
           script: |
             ls -la  
-            echo $WELCOME 
+            echo georges 
           
