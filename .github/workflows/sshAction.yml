@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: ssh pipelines
-        uses: appleby/ssh-action@master
+        uses: appleboy/ssh-action@master
         with:
           host: http://139.177.197.133
           user: root
