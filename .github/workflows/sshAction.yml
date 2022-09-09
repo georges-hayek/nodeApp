@@ -17,5 +17,4 @@ jobs:
           script: |
             ls -la  
             echo $WELCOME 
-            mkdir -p /home/github/test/test1 && 
-            mkdir -p /home/github/test/test2 &&
+          
