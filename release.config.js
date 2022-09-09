@@ -1,6 +1,6 @@
 module.exports = {
     branches: "master",
-    repositoryUrl:  "https://github.com/georges-hayek/nodeApp",
+    repositoryUrl:  "https://github.com/georges-hayek/nodeApp.git",
     plugins: [
         "@semantic-release/commit-analyzer",
         "@semantic-release/release-notes-generator",
