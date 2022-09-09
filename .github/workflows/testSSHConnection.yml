@@ -3,11 +3,12 @@ name: Connect through SSH
 on: push
 
 jobs:
-  build:
+  pinger_job:
+    name: A job to ping
     runs-on: ubuntu-latest
+    env:
+      URL: ${{ secrets.HOST }}
+      METHOD: GET  # the method used to make the request. It is GET by default
     steps:
-      
-      
-      - name: Deploy to production
-        run: ping 139.177.197.133
-         
+      - id: ping
+        uses: sisodiya2421/pinger@master
