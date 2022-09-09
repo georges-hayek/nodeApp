@@ -16,6 +16,5 @@ jobs:
       - uses: actions/setup-node@v1
       - run: npm install node-pre-gyp
       - run: npm ci
-      - run: npm run prettier:check
-
+   
 
