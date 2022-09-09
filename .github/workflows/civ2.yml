@@ -7,6 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      - name:  Cache node modules
+        id:  storeCaches
       - uses: actions/cache@v2
         env:
           cache-name: cache-node-modules
@@ -17,7 +19,8 @@ jobs:
             ${{ runner.os }}-build-${{env.cache-name}}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
-            
+      - name: Install Dependencies
+        if: steps.storeCaches.outputs.cache-hit != 'true'
       - uses: actions/setup-node@v1
       - run: npm install node-pre-gyp
       - run: npm ci
