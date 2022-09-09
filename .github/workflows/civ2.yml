@@ -23,7 +23,7 @@ jobs:
       - name: Install Dependencies
         if: steps.storeCaches.outputs.cache-hit != 'true'
         run: npm install node-pre-gyp
-        run: npm ci
+ 
    
       
     
