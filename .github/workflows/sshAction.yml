@@ -7,7 +7,7 @@ jobs:
       - name: ssh pipelines
         uses: appleboy/ssh-action@master
         with:
-          host: http://139.177.197.133
+          host: 139.177.197.133
           user: root
           key: ${{ secrets.SSH_SECRET }}
           port: 22
