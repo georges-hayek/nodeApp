@@ -11,4 +11,4 @@ jobs:
           SSH_PORT: ${{ secrets.PORT }}
           SSH_USER: ${{ secrets.USER }}
           SSH_KEY: ${{ secrets.KEY }}
-          command: pwd
+      - run: ssh ${{ steps.ssh.outputs.SERVER }} ls -la
