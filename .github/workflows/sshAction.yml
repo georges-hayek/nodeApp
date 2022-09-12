@@ -26,7 +26,7 @@ jobs:
         run: npm install
       
       - name: build the project 
-        run:  npm run build
+        run:  react-scripts build
 
       - name: Deploy
         uses: easingthemes/ssh-deploy@main
