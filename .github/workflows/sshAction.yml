@@ -1,18 +1,41 @@
-name: ssh command
-on: push
+name: Deploy Prod Apps
+
+on:
+  push:
+    branches:
+      - master
+
 jobs:
-  test:
+  deploy:
+    name: Deploy apps to prod
     runs-on: ubuntu-latest
+
     steps:
-      - name: ssh pipelines
-        uses: appleboy/ssh-action@master
+      - uses: actions/checkout@v2
+      - uses: php-actions/composer@v6
+
+      - name: Install Node.js
+        uses: actions/setup-node@v1
         with:
-          host: li2151-203.members.linode.com
-          user: root
-          key: ${{ secrets.SSH_SECRET }}
-          port: 22
-          connect_timeout: 10s
-          script: |
-            ls -la  
-            pwd
-          
+          node-version: '14.x'
+
+      - name: Install libnotify
+        run: sudo apt-get install libnotify-bin
+
+      - name: Install npm dependencies
+        run: npm install
+      
+      - name: build the project 
+        run:  npm run build
+
+      - name: Deploy
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          ARGS: >-  
+            -rltgoDzvO
+            --exclude='.git'
+            --exclude='node_modules/'
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          TARGET: /opt/testdeolyement/
