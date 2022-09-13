@@ -32,7 +32,7 @@
 
 name: slack-notification
 
-on: [push]
+on: [pull_request]
 
 jobs:
   slack-notifications:
