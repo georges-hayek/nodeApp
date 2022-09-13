@@ -35,10 +35,26 @@ name: slack-notification
 on: [push]
 
 jobs:
-  slack-notifications:
+  slack-deploy:
     runs-on: ubuntu-20.04
     name: Sends a message to Slack when a push, a pull request or an issue is made
     steps:
+      - uses: actions/checkout@v2
+ 
+
+      - name: Install Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+
+      - name: Install libnotify
+        run: sudo apt-get install libnotify-bin
+
+      - name: Install npm dependencies
+        run: npm install
+      
+      - name: build the project 
+        run:  npm run build
       - name: Send message to Slack API
         uses: archive/github-actions-slack@v2.0.0
         id: notify
@@ -48,3 +64,12 @@ jobs:
           slack-text: GitHub Action build result "${{ job.status }}" \n 
       - name: Result from "Send Message"
         run: echo "The result was ${{ steps.notify.outputs.slack-result }}"
+
+
+
+
+
+
+
+
+
