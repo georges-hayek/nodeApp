@@ -1,7 +1,7 @@
 name: Deploy Prod Apps
 
 on:
-  push:
+  issues:
     branches:
       - master
 
@@ -38,3 +38,5 @@ jobs:
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: ${{ secrets.REMOTE_TARGET }}
           EXCLUDE: "/dist/, /node_modules/"
+
+        
