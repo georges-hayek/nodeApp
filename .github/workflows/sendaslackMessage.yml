@@ -45,6 +45,6 @@ jobs:
         with:
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_TOKEN }}
           slack-channel:  ${{ secrets.Slack_Channel }}
-          slack-text: GitHub Action build result "${{ job.status }}" \n "${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+          slack-text: GitHub Action build result "${{ job.status }}" \n 
       - name: Result from "Send Message"
         run: echo "The result was ${{ steps.notify.outputs.slack-result }}"
