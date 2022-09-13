@@ -39,3 +39,5 @@ jobs:
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: /opt/testdeolyement/
+      - name: if a job fails
+        if: faliure() && github.event_name == 'push'
