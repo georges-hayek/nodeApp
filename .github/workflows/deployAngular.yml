@@ -1,6 +1,6 @@
 
 
-on: push
+on: issue_comment
       
 name: Build and Publish Averment
 jobs:
