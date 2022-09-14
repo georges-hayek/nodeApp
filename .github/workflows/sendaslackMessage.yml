@@ -62,6 +62,7 @@ jobs:
         run: sudo apt-get install libnotify-bin
 
       - name: Install npm dependencies
+        if: steps.storeCahces.outputs.cache-hit != 'true' 
         run: npm install
       
       - name: build the project 
