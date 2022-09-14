@@ -69,7 +69,7 @@ jobs:
         FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
         FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
         # LOCAL_DIR: build/
-        server-dir: /root/testDeployment
+        dry-run: true
         METHOD: sftp
         PORT: 22
         ARGS: --delete
