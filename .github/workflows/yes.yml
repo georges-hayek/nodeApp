@@ -28,7 +28,7 @@ jobs:
           port: 22 # default is 22
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
  
-          
+          command: ls
           # will put all file under this path
           local_path: ./dist  # default is ./*
           # files will copy to under remote_path
