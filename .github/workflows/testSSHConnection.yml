@@ -21,14 +21,20 @@ jobs:
     - name: List output files
       run: ls
       
-    - name: FTP-Deploy-Action
-      uses: SamKirkland/FTP-Deploy-Action@2.0.0
-      env:
-        FTP_SERVER: ${{ secrets.FTP_SERVER }}
-        FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
-        FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-        LOCAL_DIR: build/
-        server-dir: /root/testDeployment
-        METHOD: sftp
-        PORT: 22
-        ARGS: --delete
+   
+
+    - name: SFTP Deploy
+      uses: wlixcc/SFTP-Deploy-Action@v1.2.1
+      with:
+          username: root
+          server: li2151-203.members.linode.com
+          port: 22 # default is 22
+          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+ 
+
+          # will put all file under this path
+          local_path: ./dist  # default is ./*
+          # files will copy to under remote_path
+          remote_path: /home/testDeployment
+          # sftp args
+          args: '-o ConnectTimeout=5'
