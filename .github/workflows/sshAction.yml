@@ -58,7 +58,7 @@ jobs:
         with:
           name: dist    
           path: dist
-  deploy:
+  deploy-via-sftp:
     name: Deploy 🚀
     needs: build
     runs-on: ubuntu-latest
@@ -70,11 +70,43 @@ jobs:
         with: 
           name: dist
           path: dist
-      - name: Sync files to hosting
-        uses: SamKirkland/FTP-Deploy-Action@4.0.0
-        with: 
-          server: 139.177.192.133
+      - name: SFTP Deploy
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.1
+        with:
           username: root
-          password: ${{ secrets.FTP_PASSWORD }}
-          METHOD: sftp
-          PORT: 22
+          server: li2151-203.members.linode.com
+          port: 22 # default is 22
+          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+ 
+
+          # will put all file under this path
+          local_path: ./dist  # default is ./*
+          # files will copy to under remote_path
+          remote_path: /home/testDeployment
+          # sftp args
+          args: '-o ConnectTimeout=5'
+
+
+# jobs:
+#   # This workflow contains a single job called "SFTP"
+#   deploy-via-sftp:
+#     runs-on: ubuntu-latest
+#     steps:
+#       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+#       - uses: actions/checkout@v2
+          
+#       - name: SFTP Deploy
+#         uses: wlixcc/SFTP-Deploy-Action@v1.2.1
+#         with:
+#           username: root
+#           server: li2151-203.members.linode.com
+#           port: 22 # default is 22
+#           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+ 
+
+#           # will put all file under this path
+#           local_path: ./dist  # default is ./*
+#           # files will copy to under remote_path
+#           remote_path: /home/testDeployment
+#           # sftp args
+#           args: '-o ConnectTimeout=5'
