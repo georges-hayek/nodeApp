@@ -86,27 +86,18 @@ jobs:
           # sftp args
           args: '-o ConnectTimeout=5'
 
-
-# jobs:
-#   # This workflow contains a single job called "SFTP"
-#   deploy-via-sftp:
-#     runs-on: ubuntu-latest
-#     steps:
-#       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-#       - uses: actions/checkout@v2
-          
-#       - name: SFTP Deploy
-#         uses: wlixcc/SFTP-Deploy-Action@v1.2.1
-#         with:
-#           username: root
-#           server: li2151-203.members.linode.com
-#           port: 22 # default is 22
-#           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
- 
-
-#           # will put all file under this path
-#           local_path: ./dist  # default is ./*
-#           # files will copy to under remote_path
-#           remote_path: /home/testDeployment
-#           # sftp args
-#           args: '-o ConnectTimeout=5'
+  slack-notification:
+    name: send slack notification ✉️ 
+    needs: notification
+    runs-on: ubuntu-latest
+    steps: 
+    
+      - name: Send message to Slack API
+        uses: archive/github-actions-slack@v2.0.0
+        id: notify
+        with:
+          slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          slack-channel:  ${{ secrets.Slack_Channel }}
+          slack-text: GitHub Action build result "${{ job.status }}" \n 
+      - name: Result from "Send Message"
+        run: echo "The result was ${{ steps.notify.outputs.slack-result }}"
