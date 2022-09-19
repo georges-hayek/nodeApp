@@ -39,7 +39,7 @@
 
     
 name: Build and deploy
-on: issue_comment
+on: push
 
 
 jobs:
@@ -114,6 +114,7 @@ jobs:
           # files will copy to under remote_path
           remote_path: /home/testDeployment
           # sftp args
+          script: systemctl status nginx
           args: '-o ConnectTimeout=5'
 
 
