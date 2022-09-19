@@ -1,41 +1,80 @@
-name: Deploy Prod Apps
+# name: Deploy Prod Apps
 
-on:
-  push:
-    branches:
-      - master
+# on:
+#   push:
+#     branches:
+#       - master
 
-jobs:
-  InstallDependencies:
-    name: Install Dependencies
-    runs-on: ubuntu-latest
+# jobs:
+#   InstallDependencies:
+#     name: Install Dependencies
+#     runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v2
+#     steps:
+#       - uses: actions/checkout@v2
  
 
-      - name: Install Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: '14.x'
+#       - name: Install Node.js
+#         uses: actions/setup-node@v1
+#         with:
+#           node-version: '14.x'
 
-      - name: Install libnotify
-        run: sudo apt-get install libnotify-bin
+#       - name: Install libnotify
+#         run: sudo apt-get install libnotify-bin
 
-      - name: Install npm dependencies
-        run: npm install
+#       - name: Install npm dependencies
+#         run: npm install
       
    
-  Build:    
-    name: Build the App
-    runs-on: ubuntu-latest
+#   Build:    
+#     name: Build the App
+#     runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v2
+#     steps:
+#       - uses: actions/checkout@v2
  
 
-      - name: build the project 
-        run:  npm run build
+#       - name: build the project 
+#         run:  npm run build
 
     
-        
+name: Build and deploy
+on: issue_comment
+
+
+jobs:
+  build:
+    name: Build ⛏
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@main
+      - name: Install dependencies
+        run: npm ci
+      - name: Build dependencies
+        run: npm run build
+      - name: Archive production artifact
+        uses: actions/upload-artifact@main
+        with:
+          name: build
+          path: build
+  deploy:
+    name: Deploy 🚀
+    needs: build
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout repository
+        uses: actions/checkout@main
+      - name: Download artifact
+        uses: actions/download-artifact@main
+        with: 
+          name: dist
+          path: dist
+      - name: Sync files to hosting
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+        with: 
+          server: 139.177.192.133
+          username: root
+          password: ${{ secrets.FTP_PASSWORD }}
+          METHOD: sftp
+          PORT: 22
