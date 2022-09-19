@@ -1,46 +1,8 @@
-# name: Deploy Prod Apps
-
-# on:
-#   push:
-#     branches:
-#       - master
-
-# jobs:
-#   InstallDependencies:
-#     name: Install Dependencies
-#     runs-on: ubuntu-latest
-
-#     steps:
-#       - uses: actions/checkout@v2
- 
-
-#       - name: Install Node.js
-#         uses: actions/setup-node@v1
-#         with:
-#           node-version: '14.x'
-
-#       - name: Install libnotify
-#         run: sudo apt-get install libnotify-bin
-
-#       - name: Install npm dependencies
-#         run: npm install
-      
-   
-#   Build:    
-#     name: Build the App
-#     runs-on: ubuntu-latest
-
-#     steps:
-#       - uses: actions/checkout@v2
- 
-
-#       - name: build the project 
-#         run:  npm run build
-
-    
 name: Build and deploy
-on: push
-
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  issues:
+    branches: [ master ]
 
 jobs:
   build:
@@ -88,7 +50,7 @@ jobs:
 
 
 
-  deploy-via-sftp:
+  deploy-via-sftp-Restart-nginx:
     name: Deploy 🚀
     needs: build
     runs-on: ubuntu-latest
@@ -114,9 +76,17 @@ jobs:
           # files will copy to under remote_path
           remote_path: /home/testDeployment
           # sftp args
-          script: systemctl status nginx
           args: '-o ConnectTimeout=5'
 
+
+      - name: executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@master
+        with:
+            host: ${{ secrets.SERVER_HOST }}
+            username: ${{ secrets.SERVER_USER }}
+            key: ${{ secrets.SSH_PRIVATE_KEY }}
+            port: 22
+            script: systemctl status nginx
 
 
 

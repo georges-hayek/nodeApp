@@ -1,3 +1,44 @@
+
+
+# name: Deploy Prod Apps
+
+# on:
+#   push:
+#     branches:
+#       - master
+
+# jobs:
+#   InstallDependencies:
+#     name: Install Dependencies
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - uses: actions/checkout@v2
+ 
+
+#       - name: Install Node.js
+#         uses: actions/setup-node@v1
+#         with:
+#           node-version: '14.x'
+
+#       - name: Install libnotify
+#         run: sudo apt-get install libnotify-bin
+
+#       - name: Install npm dependencies
+#         run: npm install
+      
+   
+#   Build:    
+#     name: Build the App
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - uses: actions/checkout@v2
+ 
+
+#       - name: build the project 
+#         run:  npm run build
+
 name: Full CI Workflow
 
 on: [issue_comment]
