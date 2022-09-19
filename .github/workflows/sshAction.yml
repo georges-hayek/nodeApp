@@ -7,7 +7,7 @@ on:
 
 jobs:
   InstallDependencies:
-    name: Deploy apps to prod
+    name: Install Dependencies
     runs-on: ubuntu-latest
 
     steps:
