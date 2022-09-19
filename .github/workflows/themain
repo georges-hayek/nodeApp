@@ -1,6 +1,6 @@
 name: Full CI Workflow
 
-on: [push]
+on: [issue_comment]
 
 jobs:
   Install-cacheDependencies:
