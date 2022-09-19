@@ -62,7 +62,7 @@ jobs:
         run: sudo apt-get install libnotify-bin
 
       - name: Install npm dependencies
-        if: steps.storeCaches.outputs.cache-hit != 'true'
+        # if: steps.storeCaches.outputs.cache-hit != 'true'
         # if: contains(steps.storeCahces.outputs, 'Cache restored successfullysss')
         run: npm install
     
