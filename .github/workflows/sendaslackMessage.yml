@@ -103,7 +103,7 @@
 
 name: Caching npm packages
 
-on: push
+on: issues
 
 jobs:
   build:
