@@ -39,7 +39,7 @@
 
     
 name: Build and deploy
-on: issue_comment
+on: push
 
 
 jobs:
