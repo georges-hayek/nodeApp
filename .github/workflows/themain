@@ -34,24 +34,30 @@ jobs:
         # if: contains(steps.storeCahces.outputs, 'Cache restored successfullysss')
         run: npm install
     
-
+  build: 
       - name: build the project 
         run:  npm run build
 
       
-      
-      - name: Deploy to Staging server
-        uses: easingthemes/ssh-deploy@main
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
-          ARGS: "-rltgoDzvO"
-          SOURCE: "dist/"
-          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-          REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          TARGET: ${{ secrets.REMOTE_TARGET }}
-          EXCLUDE: "/dist/, /node_modules/"
+  Deploy:     
 
+        - name: SFTP Deploy
+          uses: wlixcc/SFTP-Deploy-Action@v1.2.1
+          with:
+          username: root
+          server: li2151-203.members.linode.com
+          port: 22 # default is 22
+          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+ 
 
+          # will put all file under this path
+          local_path: ./dist  # default is ./*
+          # files will copy to under remote_path
+          remote_path: /home/testDeployment
+          # sftp args
+          args: '-o ConnectTimeout=5'
+
+  Notify:
       - name: Send message to Slack API
         uses: archive/github-actions-slack@v2.0.0
         id: notify
