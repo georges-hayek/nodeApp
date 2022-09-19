@@ -101,34 +101,52 @@
 
 
 
-name: Caching npm packages
+# name: Caching npm packages
 
-on: issues
+# on: issues
 
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#     - uses: actions/checkout@v2
+
+#     - name: Cache node modules
+#       id: cache-nodemodules
+#       uses: actions/cache@v2
+#       env:
+#         cache-name: cache-node-modules
+#       with:
+#         # caching node_modules
+#         path: node_modules
+#         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+#         restore-keys: |
+#           ${{ runner.os }}-build-${{ env.cache-name }}-
+#           ${{ runner.os }}-build-
+#           ${{ runner.os }}-
+#     - name: Install Dependencies
+#       if: steps.cache-nodemodules.outputs.cache-hit != 'true'
+#       run: npm ci
+
+#     - name: Build
+#       run: npm run build
+
+
+
+name: remote ssh command
+on: [push]
 jobs:
+
   build:
+    name: Build
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-
-    - name: Cache node modules
-      id: cache-nodemodules
-      uses: actions/cache@v2
-      env:
-        cache-name: cache-node-modules
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@master
       with:
-        # caching node_modules
-        path: node_modules
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
-    - name: Install Dependencies
-      if: steps.cache-nodemodules.outputs.cache-hit != 'true'
-      run: npm ci
-
-    - name: Build
-      run: npm run build
-
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USER }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: whoami

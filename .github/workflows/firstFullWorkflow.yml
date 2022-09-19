@@ -39,7 +39,7 @@
 
     
 name: Build and deploy
-on: push
+on: issue_comment
 
 
 jobs:
@@ -103,8 +103,8 @@ jobs:
       - name: SFTP Deploy
         uses: wlixcc/SFTP-Deploy-Action@v1.2.1
         with:
-          username: root
-          server: li2151-203.members.linode.com
+          username: ${{ secrets.SERVER_USER }}
+          server: ${{ secrets.SERVER_HOST }}
           port: 22 # default is 22
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
  
@@ -132,6 +132,6 @@ jobs:
         with:
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_TOKEN }}
           slack-channel:  ${{ secrets.Slack_Channel }}
-          slack-text: GitHub Action build result "${{ job.deploy-via-sftp.status }}" \n 
+          slack-text: GitHub Action build result "${{ job.status }}" \n 
       - name: Result from "Send Message"
         run: echo "The result was ${{ steps.notify.outputs.slack-result }}"
