@@ -57,29 +57,37 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '14.x'
-      - name:  Cache node modules
-        id:  storeCaches
+
+      - name: Cache node modules
+        id: cache-nodemodules
         uses: actions/cache@v2
         env:
           cache-name: cache-node-modules
         with:
-          path: ~/.npm
+            # caching node_modules
+          path: node_modules
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{env.cache-name}}-
+            ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
-  
-      - name: Install dependencies
-        if: steps.storeCaches.outputs.cache-hit != 'true'
+      - name: Install Dependencies
+        if: steps.cache-nodemodules.outputs.cache-hit != 'true'
         run: npm ci
       - name: Build dependencies
         run: npm run build
+
+
       - name: Archive production artifact
         uses: actions/upload-artifact@main
         with:
           name: dist    
           path: dist
+
+
+
+
+
   deploy-via-sftp:
     name: Deploy 🚀
     needs: build
@@ -107,6 +115,10 @@ jobs:
           remote_path: /home/testDeployment
           # sftp args
           args: '-o ConnectTimeout=5'
+
+
+
+
 
   slack-notification:
     name: send slack notification ✉️ 
