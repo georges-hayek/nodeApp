@@ -93,7 +93,7 @@ jobs:
 
   slack-notification:
     name: send slack notification ✉️ 
-    needs: deploy-via-sftp
+    needs: deploy-via-sftp-Restart-nginx
     runs-on: ubuntu-latest
     steps: 
     
