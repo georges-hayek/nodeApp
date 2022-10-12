@@ -1,6 +1,6 @@
 name: Build and deploy
 on:
-  # Triggers the workflow on push or pull request events but only for the main branchff
+  # Triggers the workflow on push or pull request events but only for the main branchfjjf
   push:
     branches: [ master ]
 
